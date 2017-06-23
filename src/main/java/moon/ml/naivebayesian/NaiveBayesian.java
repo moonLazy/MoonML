@@ -20,7 +20,7 @@ import moon.ml.record.RecordWithFeaturesString;
  * @version 1.0.0
  */
 public class NaiveBayesian {
-	
+	 
 	/**
 	 * 读取测试文档
 	 */
@@ -75,7 +75,7 @@ public class NaiveBayesian {
 
 	/**
 	 * @Title: calFeatureIProbability
-	 * @Description: 计算第I个特征在集合中的概率
+	 * @Description: 计算第I个特征在集合中的概率，用于计算P(特征1|结果1)
 	 * @param records
 	 * @param testList
 	 * @param i
@@ -96,7 +96,14 @@ public class NaiveBayesian {
 				}
 			}
 		}
-		featureIProbability = (double) fiCount / records.size();
+		
+		//P(特征1，特征2，特征3|结果1) = P(特征1|结果1)*P(特征2|结果1)*P(特征3|结果1)
+		//如果一个特征出现的概率等于0，那么最终结果就等于0，所以默认一个特征概率等于1
+		//为了避免单一因素影响整体判断
+		if(fiCount != 0){
+			featureIProbability = (double) fiCount / records.size();
+		}
+		
 		return featureIProbability;
 	}
 
