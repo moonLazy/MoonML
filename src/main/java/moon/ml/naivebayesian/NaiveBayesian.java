@@ -84,6 +84,7 @@ public class NaiveBayesian {
 	 */
 	private static double calFeatureIProbability(List<RecordWithFeaturesString> records, List<String> testList, int i) {
 		int fiCount = 0;
+		int totalSize = records.size();
 		// 在类别C出现时第I个特征出现的概率
 		double featureIProbability = 1d;
 		for (RecordWithFeaturesString record : records) {
@@ -98,12 +99,13 @@ public class NaiveBayesian {
 		}
 		
 		//P(特征1，特征2，特征3|结果1) = P(特征1|结果1)*P(特征2|结果1)*P(特征3|结果1)
-		//如果一个特征出现的概率等于0，那么最终结果就等于0，所以默认一个特征概率等于1
-		//为了避免单一因素影响整体判断
-		if(fiCount != 0){
-			featureIProbability = (double) fiCount / records.size();
+		//当单一特征出现的概率=0，那么整个结果的概率就是0，这样就会造成单一特征，影响整体结果（这个影响太大了），
+		//为了避免单一特征主导影响整体情况,当频次等于0的时候，把分子分母都加1，表示此特征出现的概率特别特别的小
+		if(fiCount == 0){
+			fiCount++;
+			totalSize++;
 		}
-		
+		featureIProbability = (double) fiCount / totalSize;
 		return featureIProbability;
 	}
 
