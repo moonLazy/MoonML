@@ -11,8 +11,7 @@ import moon.ml.util.Uniformization;
 /**
  * @ClassName KNearestNeighbor
  * @Description 分类预测
- * 				优点：精度高、对异常数据不敏感、无数据输入假定
- * 				缺点：计算复杂度高、空间复杂度高
+ * 				适用于数值型特征值的预测
  * @author "liumingxin"
  * @Date 2017年5月23日 上午9:55:10
  * @version 1.0.0

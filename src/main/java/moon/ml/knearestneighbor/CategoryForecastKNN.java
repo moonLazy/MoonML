@@ -51,6 +51,7 @@ public class CategoryForecastKNN extends KNearestNeighbor{
 
 	public static void main(String[] args) {
 
+		//样本数据
 		List<List<String>> trains = new ArrayList<List<String>>();
 		trains.add(Arrays.asList("2", "357", "9888", "0.54", "no"));
 		trains.add(Arrays.asList("3", "452", "8888", "0.35", "no"));
@@ -67,6 +68,7 @@ public class CategoryForecastKNN extends KNearestNeighbor{
 		trains.add(Arrays.asList("8", "548", "6724", "0.64", "yes"));
 		trains.add(Arrays.asList("4", "356", "9768", "0.88", "no"));
 		
+		//最终的训练样本数据集合需要封装成List<RecordWithFeaturesDouble> 
 		List<RecordWithFeaturesDouble> trainList = new ArrayList<RecordWithFeaturesDouble>();
 		for(List<String> l : trains){
 			List<Double> ds = new ArrayList<Double>();
@@ -79,12 +81,14 @@ public class CategoryForecastKNN extends KNearestNeighbor{
 			trainList.add(r);
 		}
 		
+		//测试数据
 		List<Double> testList = new ArrayList<Double>();
 		testList.add(4d);
 		testList.add(488d);
 		testList.add(7564d);
 		testList.add(0.66d);
 		CategoryForecastKNN knn = new CategoryForecastKNN();
+		//得到结果
 		String result = knn.getResult(trainList, testList, 3).toString();
 		System.out.println(result);
 	}

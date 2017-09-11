@@ -24,7 +24,7 @@ public class NaiveBayesian {
 	/**
 	 * 读取测试文档
 	 */
-	private static List<RecordWithFeaturesString> readTest(String fileIn) {
+	public static List<RecordWithFeaturesString> readTest(String fileIn) {
 		List<RecordWithFeaturesString> outList = new ArrayList<RecordWithFeaturesString>();
 		try {
 			File file = new File(fileIn);

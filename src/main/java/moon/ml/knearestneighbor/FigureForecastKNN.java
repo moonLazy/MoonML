@@ -41,7 +41,7 @@ public class FigureForecastKNN extends KNearestNeighbor{
 	/**
 	 * 读取测试文档
 	 */
-	private static List<RecordWithFeaturesDouble> readTest(String fileIn) {
+	public static List<RecordWithFeaturesDouble> readTest(String fileIn) {
 		List<RecordWithFeaturesDouble> outList = new ArrayList<RecordWithFeaturesDouble>();
 		try {
 			File file = new File(fileIn);

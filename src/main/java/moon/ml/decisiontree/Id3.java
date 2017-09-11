@@ -1,7 +1,6 @@
 package moon.ml.decisiontree;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -14,8 +13,8 @@ import moon.ml.util.Log;
 /**
  * @ClassName Id3
  * @Description ID3决策树
- * 				优点：计算复杂度不高，输出结果易于理解，对中间值的缺失不敏感，可以处理不相关特征数据
- * 				缺点：可能产生过度匹配问题
+ * 				适用于标称型特征数据，禁止将类似ID，Date等，这样唯一值作为特征
+ * 				
  * @author "liumingxin"
  * @Date 2017年6月20日 上午10:54:03
  * @version 1.0.0
@@ -353,57 +352,17 @@ public class Id3 {
 	 * @param test
 	 * @return void
 	 */
-	public void getResult(TreeNode root, Map<String,String> test){
+	public String getResult(TreeNode root, Map<String,String> test){
 		List<TreeNode> list = root.getChildren();
 		String name = root.getName();
 		if(list != null){
 			for(TreeNode node : list){
 				if(test.get(name).equals(node.getParentAttribute())){
-					System.out.println("如果："+root.getName()+"的属性是"+node.getParentAttribute()+"则选择："+node.getName());
-					getResult(node, test);
+					name = getResult(node, test);
 				}
 			}
 		}
+		return name;
 	}
 	
-	public static void main(String[] args) {
-		//训练数据
-		List<List<String>> trains = new ArrayList<List<String>>();
-		trains.add(Arrays.asList("sunny", "hot", "high", "FALSE", "no"));
-		trains.add(Arrays.asList("sunny", "hot", "high", "TRUE", "no"));
-		trains.add(Arrays.asList("overcast", "hot", "high", "FALSE", "yes"));
-		trains.add(Arrays.asList("rainy", "mild", "high", "FALSE", "yes"));
-		trains.add(Arrays.asList("rainy", "cool", "normal", "FALSE", "yes"));
-		trains.add(Arrays.asList("rainy", "cool", "normal", "TRUE", "no"));
-		trains.add(Arrays.asList("overcast", "cool", "normal", "TRUE", "yes"));
-		trains.add(Arrays.asList("sunny", "mild", "high", "FALSE", "no"));
-		trains.add(Arrays.asList("sunny", "cool", "normal", "FALSE", "yes"));
-		trains.add(Arrays.asList("rainy", "mild", "normal", "FALSE", "yes"));
-		trains.add(Arrays.asList("sunny", "mild", "normal", "TRUE", "yes"));
-		trains.add(Arrays.asList("overcast", "mild", "high", "TRUE", "yes"));
-		trains.add(Arrays.asList("overcast", "hot", "normal", "FALSE", "yes"));
-		trains.add(Arrays.asList("rainy", "mild", "high", "TRUE", "no"));
-		
-		Integer singleLength = trains.get(0).size();
-		
-		//对应的特征和结果名称[A,B,C,D,E]分别对应训练数据集中1，2，3，4，5列
-		List<String> trainName = new ArrayList<String>();
-		for(int i=(int)'A';i<'A'+singleLength;i++){
-			trainName.add(Character.toString((char)i));
-		}
-		
-		Id3 id = new Id3();
-		id.setFeatureNames(trainName);
-		TreeNode root = id.createTree(trains);
-		
-		List<String> test = Arrays.asList("sunny","mild","high","FALSE");
-		
-		Map<String,String> map = id.testMapper(trainName, test);
-		
-		if(map != null){
-			id.getResult(root, map);
-		}else{
-			System.out.println("数据-名称映射错误");
-		}
-	}
 }

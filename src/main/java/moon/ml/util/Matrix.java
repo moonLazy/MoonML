@@ -1,5 +1,8 @@
 package moon.ml.util;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
@@ -94,5 +97,27 @@ public class Matrix {
 			return new Array2DRowRealMatrix(cc);
 		}
 		return null;
+	}
+	
+	/**
+	 * @Title: realMatrix2ListDouble
+	 * @Description: 实数矩阵转成List<Double>
+	 * @param dataRealMatrix
+	 * @return
+	 * @return List<Double>
+	 */
+	public static List<Double> realMatrix2ListDouble(RealMatrix dataRealMatrix){
+		if(dataRealMatrix == null){
+			return null;
+		}
+		List<Double> dataList = new ArrayList<Double>();
+		int row = dataRealMatrix.getRowDimension();
+		for(int i=0;i<row;i++){
+			double[] ds = dataRealMatrix.getRow(i);
+			for(int j=0;j<ds.length;j++){
+				dataList.add(ds[j]);
+			}
+		}
+		return dataList;
 	}
 }
